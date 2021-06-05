@@ -1,0 +1,80 @@
+Here , I am Re-Installing Grub on dual boot with windows ....
+
+NOTE :This is for who are installed windows and reinstall grub and : 
+	1:  Not efi
+	2:  Haven't given a seperate /boot /var etc partitions .
+ 
+Step 1 : Boot a live USB or DVD of a linux system 
+			
+	Linux live system can be Ubuntu/Debian based Distros .
+
+Step 2 : Open terminal , check where does the linux is installed 
+	for that type in terminal 
+		
+	user@linux$ sudo fdisk -l
+	
+you will get a list of disks and partitions , In my case 
+
+	└──╼ $sudo fdisk -l
+	Disk /dev/sda: 149.05 GiB, 160040803840 bytes, 312579695 sectors
+	Disk model: ST3160815AS     
+	Units: sectors of 1 * 512 = 512 bytes
+	Sector size (logical/physical): 512 bytes / 512 bytes
+	I/O size (minimum/optimal): 512 bytes / 512 bytes
+	Disklabel type: dos
+	Disk identifier: 0x9a5d730e
+
+	Device     Boot     Start       End   Sectors  Size Id Type
+	/dev/sda1  *      1026048 153094143 152068096 72.5G  7 HPFS/NTFS/exFAT
+	/dev/sda2       154118144 216008703  61890560 29.5G  7 HPFS/NTFS/exFAT
+	/dev/sda3       216008704 312577063  96568360   46G 83 Linux
+	/dev/sda4       153096190 154118143   1021954  499M  5 Extended
+	/dev/sda5       153096192 154118143   1021952  499M 82 Linux swap / Solaris
+
+	Partition table entries are not in disk order.
+
+
+	Disk /dev/loop0: 1.55 GiB, 1668120576 bytes, 3258048 sectors
+	Units: sectors of 1 * 512 = 512 bytes
+	Sector size (logical/physical): 512 bytes / 512 bytes
+	I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+
+
+Step 3 : Mount your linux system 
+
+	user@linux$ sudo mount /dev/sdaX /mnt  
+	
+
+	# replace  X with your linux partition
+	
+Step 4 : now type 
+
+	user@linux$ for i in /sys /proc /run /dev; do sudo mount --bind "$i" "/mnt$i"; done
+
+Step 5 : Get into chroot ...
+	
+	user@linux$ sudo chroot /mnt
+
+Step 6 : 
+	
+	root@linux# update-grub
+
+	If this command didn't work 
+
+	root@linux# grub-mkconfig -o /boot/grub/grub.cfg
+	
+	and this gets error : 
+	
+	root@linux# grub-install /dev/sda
+	root@linux# grub-update   ---???if not working then ,
+	< root@linux# grub-mkconfig -o /boot/grub/grub.cfg  >
+	
+Step 7 : root@linux# exit
+
+Step 8 : user@linux$ sudo reboot 
+
+
+
+
+
