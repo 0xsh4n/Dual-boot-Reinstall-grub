@@ -11,7 +11,7 @@ Step 1 : Boot a live USB or DVD of a linux system
 Step 2 : Open terminal , check where does the linux is installed 
 	for that type in terminal 
 		
-	user@linux$ sudo fdisk -l
+	```user@linux$ sudo fdisk -l```
 	
 you will get a list of disks and partitions , In my case 
 
@@ -43,36 +43,35 @@ you will get a list of disks and partitions , In my case
 
 Step 3 : Mount your linux system 
 
-	user@linux$ sudo mount /dev/sdaX /mnt  
+	```user@linux$ sudo mount /dev/sdaX /mnt  ```
 	
 
 	# replace  X with your linux partition
 	
 Step 4 : now type 
 
-	user@linux$ for i in /sys /proc /run /dev; do sudo mount --bind "$i" "/mnt$i"; done
+	```user@linux$ for i in /sys /proc /run /dev; do sudo mount --bind "$i" "/mnt$i"; done```
 
 Step 5 : Get into chroot ...
 	
-	user@linux$ sudo chroot /mnt
-
+	```user@linux$ sudo chroot /mnt```
 Step 6 : 
 	
-	root@linux# update-grub
+	```root@linux# update-grub```
 
 	If this command didn't work 
 
-	root@linux# grub-mkconfig -o /boot/grub/grub.cfg
+	```root@linux# grub-mkconfig -o /boot/grub/grub.cfg```
 	
 	and this gets error : 
 	
-	root@linux# grub-install /dev/sda
-	root@linux# grub-update   ---???if not working then ,
-	< root@linux# grub-mkconfig -o /boot/grub/grub.cfg  >
+	```root@linux# grub-install /dev/sda```
+	```root@linux# grub-update```   ---???if not working then ,
+	< ```root@linux# grub-mkconfig -o /boot/grub/grub.cfg ``` >
 	
-Step 7 : root@linux# exit
+Step 7 :``` root@linux# exit```
 
-Step 8 : user@linux$ sudo reboot 
+Step 8 : ```user@linux$ sudo reboot``` 
 
 
 
